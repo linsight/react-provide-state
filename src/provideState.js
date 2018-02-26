@@ -1,7 +1,7 @@
 import React from 'react';
 import * as registry from './registry';
 
-export default ({ namespace, name, alias, defaultValue }) => (Component) => {
+export default ({ namespace, name, alias, initValue }) => (Component) => {
   const ns = namespace || 'defaultNamespace';
 
   class ComponentWithState extends React.Component {
@@ -13,7 +13,7 @@ export default ({ namespace, name, alias, defaultValue }) => (Component) => {
       let value = registry.getState(ns, name);
 
       if (value === undefined) {
-        value = defaultValue;
+        value = initValue;
         registry.setState(ns, name, value);
       }
 
@@ -42,7 +42,7 @@ export default ({ namespace, name, alias, defaultValue }) => (Component) => {
 
     render() {
       const propName = alias || name || 'default';
-      const handlerName = `on${propName.replace(propName[0], propName[0].toUpperCase())}Change`;
+      const handlerName = `set${propName.replace(propName[0], propName[0].toUpperCase())}`;
       const stateProps = {
         [propName]: this.state[name],
         [handlerName]: this.handleStateChange,

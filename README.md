@@ -42,7 +42,7 @@ const ComponentB = ({text, setText}) => {
 const stateConfig = {
     namespace: 'optional namespace',
     name: 'value',
-    default: 'default value',
+    initValue: 'initial value',
 };
 
 export const ComponentAWithState = provideState(stateConfig)(MyComponent);

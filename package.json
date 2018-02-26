@@ -1,8 +1,8 @@
 {
   "name": "react-provide-state",
   "version": "1.0.0",
-  "description": "Produce universal library with webpack and es6",
-  "main": "lib/library.js",
+  "description": "A simple higher order function for managing a small amount of React state",
+  "main": "lib/react-provide-state.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build && npm run test",
     "dev": "webpack --progress --colors --watch --env dev",
@@ -11,19 +11,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/krasimir/webpack-library-starter.git"
+    "url": "https://github.com/linsight/react-provide-state.git"
   },
   "keywords": [
     "react",
     "provider",
     "state"
   ],
-  "author": "Krasimir Tsonev",
+  "author": "David Lin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/krasimir/webpack-library-starter/issues"
+    "url": "https://github.com/linsight/react-provide-state/issues"
   },
-  "homepage": "https://github.com/krasimir/webpack-library-starter",
+  "homepage": "https://github.com/linsight/react-provide-state",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
