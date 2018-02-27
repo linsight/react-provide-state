@@ -1,6 +1,6 @@
 {
   "name": "react-provide-state",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple higher order function for managing a small amount of React state",
   "main": "lib/react-provide-state.js",
   "scripts": {
