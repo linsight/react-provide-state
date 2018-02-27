@@ -8,7 +8,7 @@ A simple higher order function for managing a small amount of state.  It allows:
 
 
 Redux is recommended for managing main application state. However, there are times when you need
-to manage a small pieces of state that only relevant to one of two components. 
+to manage a small piece of state that is only relevant to one of two components.
 
 For example:
 
@@ -45,8 +45,8 @@ const stateConfig = {
     initValue: 'initial value',
 };
 
-export const ComponentAWithState = provideState(stateConfig)(MyComponent);
-export const ComponentBWithState = provideState({name: 'value', alias: 'text'})(MyComponent);
+export const ComponentAWithState = provideState(stateConfig)(ComponentA);
+export const ComponentBWithState = provideState({name: 'value', alias: 'text'})(ComponentB);
 
 
 ```
@@ -59,14 +59,15 @@ export const ComponentBWithState = provideState({name: 'value', alias: 'text'})(
 
 Config fields|Description
 ---|---
-`name`|The name of the state
+`name`|The name of the state. It will be also used as one of the prop names past to the wrapped components.
 `namespace`|Optional namespace for avoiding name collision when providing multiple components with the same state name. By default, all components provided with same state name will share the the same state. You can choose to use a different namespace so that it is isolated from state in other namespace. If you do not provide a namespace, the default namespace of `defaultNamespace` is used.
-`alias`|Optional. The wrapped component will be past with two props. One of them share the same `name` of the state (e.g. `value`) with the state value; The other prop is a callback function in the format of `set[Name]` e.g.(`setValue`). If you want to use different names, you can use 'alias' config. For example, if alias is `text`, the two property past will be `text` and `setText`.    
+`alias`|Optional. The wrapped component will be past with two props. One of them share the same `name` of the state (e.g. `value`) with the state value; The other prop is a callback function in the format of `set[Name]` (e.g. `setValue`). If you want to use different names, you can use 'alias' config. For example, if alias is `text`, the two property past will be `text` and `setText`.
+`initValue`| Optional initial value. It can be array, object and any value.
 
 
 
 # Tips
 
 1. If you want to make sure your state name will not collide with ANY existing states, you can use a Symbol as the namespace. e.g. `{namspace: Symbol(), name: 'text'}`;
-2. You component is responsible for calling the `set[Name]` function when update of the state value is required;
+2. The wrapped component is responsible for calling the `set[Name]` function with new value when update of the state value is required;
 

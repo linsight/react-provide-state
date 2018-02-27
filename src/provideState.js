@@ -2,7 +2,8 @@ import React from 'react';
 import * as registry from './registry';
 
 export default ({ namespace, name, alias, initValue }) => (Component) => {
-  const ns = namespace || 'defaultNamespace';
+  const stateNamespace = namespace || 'defaultNamespace';
+  const stateName = name || 'defaultName';
 
   class ComponentWithState extends React.Component {
     constructor(props) {
@@ -10,30 +11,30 @@ export default ({ namespace, name, alias, initValue }) => (Component) => {
 
       this.handleStateChange = this.handleStateChange.bind(this);
 
-      let value = registry.getState(ns, name);
+      let value = registry.getState(stateNamespace, stateName);
 
       if (value === undefined) {
         value = initValue;
-        registry.setState(ns, name, value);
+        registry.setState(stateNamespace, stateName, value);
       }
 
-      this.state = { [name]: value };
+      this.state = { [stateName]: value };
     }
 
     componentWillMount() {
-      registry.addHandler(ns, name, this.handleStateChange);
+      registry.addHandler(stateNamespace, stateName, this.handleStateChange);
     }
 
     componentWillUnmount() {
-      registry.removeHandler(ns, name, this.handleStateChange);
+      registry.removeHandler(stateNamespace, stateName, this.handleStateChange);
     }
 
     handleStateChange(newValue, updateRegistry = true) {
-      this.setState({ [name]: newValue });
+      this.setState({ [stateName]: newValue });
 
       if (updateRegistry) {
-        const handlers = registry.getHandlers(ns, name);
-        registry.setState(ns, name, newValue);
+        const handlers = registry.getHandlers(stateNamespace, stateName);
+        registry.setState(stateNamespace, stateName, newValue);
         handlers
           .filter(handler => handler !== this.handleStateChange)
           .forEach(handler => handler(newValue, false));
@@ -41,12 +42,12 @@ export default ({ namespace, name, alias, initValue }) => (Component) => {
     }
 
     render() {
-      const propName = alias || name || 'default';
+      const propName = alias || stateName;
       const handlerName = `set${propName.replace(propName[0], propName[0].toUpperCase())}`;
-      const stateProps = {
-        [propName]: this.state[name],
+      const stateProps = propName ? {
+        [propName]: this.state[stateName],
         [handlerName]: this.handleStateChange,
-      };
+      } : {};
 
       return (
         <Component {...stateProps} {...this.props} />
