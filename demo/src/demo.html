@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Webpack App</title>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+</head>
+<body>
+<div class="container">
+  <h2>react-provide-state Demo</h2>
+  <div id="root"></div>
+  <pre>
+    <code class="language-javascript">
+import React from &#x27;react&#x27;;
+import ReactDom from &#x27;react-dom&#x27;;
+
+import provideState from &#x27;./src/provideState&#x27;;
+
+const ComponentA = ({value, setValue}) =&#x3E; {
+  return (&#x3C;div&#x3E;
+    &#x3C;span&#x3E;You are entering: &#x3C;/span&#x3E;
+    &#x3C;input value={value} onChange={(e) =&#x3E; setValue(e.target.value)} /&#x3E;
+  &#x3C;/div&#x3E;);
+};
+
+const ComponentB = ({text}) =&#x3E; {
+  return (&#x3C;div&#x3E;
+    &#x3C;span&#x3E;You have entered: &#x3C;/span&#x3E;
+    &#x3C;span&#x3E;{text}&#x3C;/span&#x3E;
+  &#x3C;/div&#x3E;);
+};
+
+const stateConfig = {
+  namespace: &#x27;optional namespace&#x27;,
+  name: &#x27;value&#x27;,
+  initValue: &#x27;please type...&#x27;,
+};
+
+export const ComponentAWithState = provideState(stateConfig)(ComponentA);
+export const ComponentBWithState = provideState({...stateConfig, alias: &#x27;text&#x27;})(ComponentB);
+
+ReactDom.render(
+  &#x3C;div&#x3E;
+    &#x3C;ComponentAWithState /&#x3E;
+    &#x3C;ComponentBWithState /&#x3E;
+  &#x3C;/div&#x3E;,
+  document.querySelector(&#x27;#root&#x27;)
+);
+      </code>
+  </pre>
+</div>
+</body>
+</html>

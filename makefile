@@ -12,6 +12,9 @@ test: deps-node
 build: deps-node
 	npm run build
 
+build-demo: deps-node
+	npm run build:demo
+
 ################################################################################
 # Node
 

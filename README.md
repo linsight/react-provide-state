@@ -8,13 +8,14 @@ A simple higher order function for managing a small amount of state.  It allows:
 
 
 Redux is recommended for managing main application state. However, there are times when you need
-to manage a small piece of state that is only relevant to one of two components.
+to manage a small piece of state that is only relevant to a few components.
 
 For example:
 
 1. Selected font size or color of a paragraph;
 2. Selected tabs, checkbox or radio buttons;
 3. Temporary text input ( while user typing );
+4. Controlling modal's open/close state;
 
 These states are most likely UI states that only concerns a handful of components
 However, with that said, Redux is often a better solution for sharing states with multiple components. 
@@ -46,11 +47,12 @@ const stateConfig = {
 };
 
 export const ComponentAWithState = provideState(stateConfig)(ComponentA);
-export const ComponentBWithState = provideState({name: 'value', alias: 'text'})(ComponentB);
+export const ComponentBWithState = provideState({...stateConfig, alias: 'text'})(ComponentB);
 
 
 ```
 
+Live demo: [demo/dist/index.html](https://linsight.github.io/react-provide-state/demo/dist/index.html)
  
 # How it works
 
@@ -70,4 +72,21 @@ Config fields|Description
 
 1. If you want to make sure your state name will not collide with ANY existing states, you can use a Symbol as the namespace. e.g. `{namspace: Symbol(), name: 'text'}`;
 2. The wrapped component is responsible for calling the `set[Name]` function with new value when update of the state value is required;
+3. If you are sharing the same state amongst multiple components. It is recommended to create another higher order function for providing the same state. e.g.:
 
+
+```
+....
+
+const stateConfig = {
+    namespace: 'optional namespace',
+    name: 'value',
+    initValue: 'initial value',
+};
+
+const provideInputState = (component, alias) => provideState({...stateConfig, alias})(compoennt);
+
+export const ComponentAWithState = provideInputState(ComponentA);
+export const ComponentBWithState = provideInputState(ComponentB, 'text');
+
+```

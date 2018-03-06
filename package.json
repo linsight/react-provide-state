@@ -5,6 +5,7 @@
   "main": "lib/react-provide-state.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build && npm run test",
+    "build:demo": "webpack --env dev && webpack --config webpack.config.demo.js",
     "dev": "webpack --progress --colors --watch --env dev",
     "test": "mocha --require babel-core/register --colors ./test/*.spec.js",
     "test:watch": "mocha --require babel-core/register --colors -w ./test/*.spec.js"
@@ -36,7 +37,10 @@
     "chai": "^4.1.2",
     "eslint": "^4.13.1",
     "eslint-loader": "^1.9.0",
+    "html-webpack-plugin": "^3.0.4",
     "mocha": "^4.0.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "webpack": "^3.10.0",
     "yargs": "^11.0.0"
   }
