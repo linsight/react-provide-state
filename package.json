@@ -43,5 +43,8 @@
     "react-dom": "^16.2.0",
     "webpack": "^3.10.0",
     "yargs": "^11.0.0"
+  },
+  "peerDependencies": {
+    "react": "15.x || 16.x"
   }
 }
